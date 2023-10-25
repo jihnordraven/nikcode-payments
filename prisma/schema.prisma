@@ -8,10 +8,10 @@ datasource db {
 }
 
 model Balance {
-  id String @id @unique @default(uuid())
-  name String @default("default")
-  amount Float @default(0)
-  userId String
+  id        String   @id @unique @default(uuid())
+  name      String   @default("default")
+  amount    Float    @default(0)
+  userId    String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -19,23 +19,23 @@ model Balance {
 }
 
 model Payment {
-  id String @id @unique @default(uuid())
-  type PaymentType
-  amount Float
+  id          String      @id @unique @default(uuid())
+  type        PaymentType
+  amount      Float
   description String
-  userId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  userId      String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
-  categoryId String
-  category Category @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("payment")
 }
 
 model Category {
-  id String @id @unique @default(uuid())
-  name String
+  id     String @id @unique @default(uuid())
+  name   String
   userId String
 
   payments Payment[]

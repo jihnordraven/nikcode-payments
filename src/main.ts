@@ -13,7 +13,7 @@ import { blue, red } from 'colorette'
 import { SwaggerConfig } from './utils/swagger'
 import * as Sentry from '@sentry/node'
 import { ProfilingIntegration } from '@sentry/profiling-node'
-import { SentryFilter } from './utils/errors-handlers'
+import { SentryFilter, ValidatePipeOptions } from './utils/errors-handlers'
 
 type NestApp = NestExpressApplication
 
@@ -32,7 +32,7 @@ const bootstrap = async (): Promise<void> => {
 		],
 		methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'HEAD']
 	})
-	app.useGlobalPipes(new ValidationPipe())
+	app.useGlobalPipes(new ValidationPipe(ValidatePipeOptions))
 
 	const config: ConfigService = app.get<ConfigService>(ConfigService)
 

@@ -3,6 +3,11 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { redisStore } from 'cache-manager-redis-yet'
 import { PrismaModule } from '../prisma/prisma.module'
+import { PaymentsModule } from './modules/payments/payments.module'
+import { STRATEGIES } from './guards-handlers'
+import { BalancesModule } from './modules/balances/balances.module'
+import { JwtGuard } from './guards-handlers/jwt/jwt.guard'
+import { APP_GUARD } from '@nestjs/core'
 
 @Module({
 	imports: [
@@ -20,7 +25,16 @@ import { PrismaModule } from '../prisma/prisma.module'
 				})
 			})
 		}),
-		PrismaModule
+		PrismaModule,
+		PaymentsModule,
+		BalancesModule
+	],
+	providers: [
+		{
+			provide: APP_GUARD,
+			useClass: JwtGuard
+		},
+		...STRATEGIES
 	]
 })
 export class AppModule {}
