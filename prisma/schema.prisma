@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Balance {
+  id        String   @id @unique @default(uuid())
+  name      String   @default("default")
+  amount    Float    @default(0)
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("balances")
+}
+
+model Payment {
+  id          String      @id @unique @default(uuid())
+  type        PaymentType
+  amount      Float
+  description String
+  userId      String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("payments")
+}
+
+model Category {
+  id          String  @id @unique @default(uuid())
+  name        String
+  description String?
+  userId      String
+  color       String?
+  iconUrl     String?
+
+  payments Payment[]
+}
+
+// enums
+enum PaymentType {
+  INCOME
+  EXPENSE
+}
