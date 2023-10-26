@@ -8,5 +8,5 @@ export type FindManyPayments = {
 	orderDate?: Prisma.SortOrder
 	orderAmount?: Prisma.SortOrder
 	orderType?: PaymentType
-	categoryId:: string
+	categoryId: string
 }
