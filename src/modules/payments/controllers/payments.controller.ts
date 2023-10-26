@@ -61,7 +61,8 @@ export class PaymentsController {
 		@Query('limit') limit: string,
 		@Query('page') page: string,
 		@Query('orderDate') orderDate: Prisma.SortOrder,
-		@Query('orderAmount') orderAmount: Prisma.SortOrder
+		@Query('orderAmount') orderAmount: Prisma.SortOrder,
+		@Query('categoryId', ParseUUIDPipe) categoryId: string
 	): Promise<FindManyPaymentsResponse> {
 		return this.paymentsQueryRepo.findMany({
 			userId,
@@ -69,7 +70,8 @@ export class PaymentsController {
 			page: page ? +page : 1,
 			limit: limit ? +limit : 10,
 			orderDate: orderDate ? orderDate : 'desc',
-			orderAmount
+			orderAmount,
+			categoryId
 		})
 	}
 

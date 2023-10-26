@@ -14,7 +14,7 @@ export class PaymentsQueryRepo {
 	) {}
 
 	public async findMany(data: FindManyPayments): Promise<FindManyPaymentsResponse> {
-		const { userId, page, limit, query, orderDate, orderAmount } = data
+		const { userId, page, limit, query, orderDate, orderAmount, categoryId } = data
 
 		const skip: number = (page - 1) * limit
 
@@ -24,6 +24,12 @@ export class PaymentsQueryRepo {
 		if (query) {
 			whereOrder.description = {
 				contains: query,
+				mode: 'insensitive'
+			}
+		}
+		if (categoryId) {
+			whereOrder.categoryId = {
+				equals: categoryId,
 				mode: 'insensitive'
 			}
 		}
