@@ -2,8 +2,8 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { CreatePaymentCommand } from './create-payment.command'
 import { Balance, Payment, PaymentType } from '@prisma/client'
 import { BalancesRepo } from '../../../../modules/balances/repositories/balances.repo'
-import { BadRequestException } from '@nestjs/common'
-import { PaymentsRepo } from '../../repositories/payments.repo'
+import { BadRequestException, NotFoundException } from '@nestjs/common'
+import { PaymentsRepo } from '../../repositories/payments-repo/payments.repo'
 
 @CommandHandler(CreatePaymentCommand)
 export class CreatePaymentHandler implements ICommandHandler<CreatePaymentCommand> {
@@ -15,7 +15,8 @@ export class CreatePaymentHandler implements ICommandHandler<CreatePaymentComman
 	public async execute({ input }: CreatePaymentCommand): Promise<Payment> {
 		const { type, amount, userId } = input
 
-		const balance: Balance = await this.balancesRepo.findByUserId(userId)
+		const balance: Balance | null = await this.balancesRepo.findByUserId(userId)
+		if (!balance) throw new NotFoundException('Balance not found')
 
 		switch (type) {
 			case PaymentType.INCOME:

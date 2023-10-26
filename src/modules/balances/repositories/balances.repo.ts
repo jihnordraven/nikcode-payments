@@ -9,7 +9,7 @@ import { PrismaService } from '../../../../prisma/prisma.service'
 import { Balance } from '@prisma/client'
 import { CACHE_MANAGER } from '@nestjs/cache-manager'
 import { Cache } from 'cache-manager'
-import { BalanceTTL } from 'src/utils/constants'
+import { BalanceTTL } from '../../../utils/constants'
 import { red } from 'colorette'
 import { CreateBalance } from '../core/types/create-balance.type'
 
@@ -22,16 +22,16 @@ export class BalancesRepo {
 		private readonly prisma: PrismaService
 	) {}
 
-	public async create(data: CreateBalance): Promise<Balance> {
-		const balance: Balance = await this.prisma.balance
-			.create({ data })
+	public async create(userId: string): Promise<{ ok: boolean; err?: string }> {
+		const balance: Balance | any = await this.prisma.balance
+			.create({ data: { userId } })
 			.catch((err: string) => {
 				this.logger.error(red(err))
-				throw new InternalServerErrorException(err)
+				return { ok: false, err }
 			})
 
 		await this.setCache(balance)
-		return balance
+		return { ok: true }
 	}
 
 	public async findById(id: string): Promise<Balance | null> {
@@ -72,8 +72,10 @@ export class BalancesRepo {
 
 		const updatedBalance: Balance = await this.prisma.balance
 			.update({
-				where: { ...balance },
-				data: { amount }
+				where: { id },
+				data: {
+					amount
+				}
 			})
 			.catch((err: string) => {
 				this.logger.error(red(err))
@@ -84,6 +86,22 @@ export class BalancesRepo {
 
 		await this.setCache(balance)
 		return updatedBalance
+	}
+
+	public async deleteByUserId(userId: string): Promise<Balance> {
+		const balance: Balance | null = await this.findByUserId(userId)
+
+		if (!balance) return null
+
+		const deletedBalance = await this.prisma.balance
+			.delete({ where: { userId } })
+			.catch((err: string) => {
+				this.logger.error(red(err))
+				return null
+			})
+
+		await this.cleanCache(deletedBalance)
+		return deletedBalance
 	}
 
 	// Helpers

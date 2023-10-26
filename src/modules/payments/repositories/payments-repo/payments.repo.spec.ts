@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing'
+import { PaymentsRepo } from './payments.repo'
 import { CACHE_MANAGER } from '@nestjs/cache-manager'
+import { PrismaService } from '../../../../../prisma/prisma.service'
 import { Cache } from 'cache-manager'
-import { BalancesRepo } from './balances.repo'
-import { PrismaService } from '../../../../prisma/prisma.service'
 
-describe('BalancesRepo', (): void => {
-	let balancesRepo: BalancesRepo
+describe('PaymentsRepo', (): void => {
+	let paymentsRepo: PaymentsRepo
 	let cache: Cache
 	let prismaService: PrismaService
 
 	beforeEach(async (): Promise<void> => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
-				BalancesRepo,
+				PaymentsRepo,
 				{
 					provide: CACHE_MANAGER,
 					useValue: {}
@@ -24,12 +24,12 @@ describe('BalancesRepo', (): void => {
 			]
 		}).compile()
 
-		balancesRepo = module.get<BalancesRepo>(BalancesRepo)
+		paymentsRepo = module.get<PaymentsRepo>(PaymentsRepo)
 		cache = module.get<Cache>(CACHE_MANAGER)
 		prismaService = module.get<PrismaService>(PrismaService)
 	})
 
 	it('should be defined', (): void => {
-		expect(balancesRepo).toBeDefined()
+		expect(paymentsRepo).toBeDefined()
 	})
 })

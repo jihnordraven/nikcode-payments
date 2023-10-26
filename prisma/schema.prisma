@@ -28,9 +28,9 @@ model Payment {
   updatedAt   DateTime    @updatedAt
 
   categoryId String?
-  category   Category? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  // category   Category? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@map("payment")
+  @@map("payments")
 }
 
 model Category {
@@ -38,7 +38,7 @@ model Category {
   name   String
   userId String
 
-  payments Payment[]
+  // payments Payment[]
 }
 
 // enums

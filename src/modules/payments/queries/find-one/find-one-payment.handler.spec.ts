@@ -1,32 +1,27 @@
 import { Test, TestingModule } from '@nestjs/testing'
+import { FindOnePaymentHandler } from './find-one-payment.handler'
 import { PaymentsRepo } from '../../repositories/payments-repo/payments.repo'
-import { CreatePaymentHandler } from './create-payment.handler'
-import { BalancesRepo } from '../../../../modules/balances/repositories/balances.repo'
 
-describe('CreatePaymentHandler', (): void => {
-	let createPaymentHandler: CreatePaymentHandler
+describe('FindOnePaymentHandler', (): void => {
+	let findOnePaymentHandler: FindOnePaymentHandler
 	let paymentsRepo: PaymentsRepo
 
 	beforeEach(async (): Promise<void> => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
-				CreatePaymentHandler,
+				FindOnePaymentHandler,
 				{
 					provide: PaymentsRepo,
-					useValue: {}
-				},
-				{
-					provide: BalancesRepo,
 					useValue: {}
 				}
 			]
 		}).compile()
 
-		createPaymentHandler = module.get<CreatePaymentHandler>(CreatePaymentHandler)
+		findOnePaymentHandler = module.get<FindOnePaymentHandler>(FindOnePaymentHandler)
 		paymentsRepo = module.get<PaymentsRepo>(PaymentsRepo)
 	})
 
 	it('should be defined', (): void => {
-		expect(createPaymentHandler).toBeDefined()
+		expect(findOnePaymentHandler).toBeDefined()
 	})
 })

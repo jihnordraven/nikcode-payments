@@ -6,13 +6,16 @@ import { red } from 'colorette'
 
 const logger: Logger = new Logger('msBootstrap')
 
+const RMQ_HOST: string = process.env.RMQ_HOST
+const RMQ_QUEUE: string = process.env.RMQ_QUEUE
+
 const msBootstrap = async () => {
 	const app: INestMicroservice =
 		await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
 			transport: Transport.RMQ,
 			options: {
 				urls: ['amqp://admin:admin@localhost:5672'],
-				queue: 'main',
+				queue: 'payments',
 				queueOptions: {
 					durable: true
 				}

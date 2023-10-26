@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { BalancesController } from './balances.controller'
+import { BalancesController } from './controllers/balances.controller'
 import { BalancesRepo } from './repositories/balances.repo'
 import { CqrsModule } from '@nestjs/cqrs'
 
