@@ -3,6 +3,9 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices'
 import { AppModule } from './app.module'
 import { INestMicroservice, Logger } from '@nestjs/common'
 import { red } from 'colorette'
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 const logger: Logger = new Logger('msBootstrap')
 
@@ -14,11 +17,8 @@ const msBootstrap = async () => {
 		await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
 			transport: Transport.RMQ,
 			options: {
-				urls: ['amqp://admin:admin@localhost:5672'],
-				queue: 'payments',
-				queueOptions: {
-					durable: true
-				}
+				urls: [RMQ_HOST],
+				queue: RMQ_QUEUE
 			}
 		})
 

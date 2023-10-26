@@ -33,7 +33,7 @@ export class PaymentsController {
 	) {}
 
 	@SWAGGER_PAYMENTS.SwaggerToCreatePayment()
-	@Post('create')
+	@Post()
 	@HttpCode(HttpStatus.OK)
 	public async create(
 		@Body() dto: CreatePaymentDto,

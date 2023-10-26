@@ -29,24 +29,24 @@ export class CategoriesController {
 	constructor(private readonly commandBus: CommandBus) {}
 
 	@SWAGGER_CATEGORIES.SwaggerToCreateCategory()
-	@Post('create')
+	@Post()
 	@HttpCode(HttpStatus.OK)
-	@UseInterceptors(FileInterceptor('image'))
+	// @UseInterceptors(FileInterceptor('image'))
 	public async create(
 		@CurrentUser('userId', ParseUUIDPipe) userId: string,
-		@Body() dto: CreateCategoryDto,
-		@UploadedFile(
-			new ParseFilePipe({
-				validators: [
-					new FileTypeValidator({ fileType: /\.(jpg|jpeg|png)$/ }),
-					new MaxFileSizeValidator({ maxSize: 100 * 1024 })
-				]
-			})
-		)
-		file: Express.Multer.File
+		@Body() dto: CreateCategoryDto
+		// @UploadedFile(
+		// 	new ParseFilePipe({
+		// 		validators: [
+		// 			new FileTypeValidator({ fileType: /\.(jpg|jpeg|png)$/ }),
+		// 			new MaxFileSizeValidator({ maxSize: 100 * 1024 })
+		// 		]
+		// 	})
+		// )
+		// file?: Express.Multer.File
 	): Promise<Category> {
 		return this.commandBus.execute(
-			new CC.CreateCategoryCommand({ userId, file, ...dto })
+			new CC.CreateCategoryCommand({ userId, file: null, ...dto })
 		)
 	}
 
