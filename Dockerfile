@@ -1,4 +1,4 @@
-FROM node-alpine3.17
+FROM node:latest
 
 WORKDIR /app
 
@@ -16,4 +16,4 @@ RUN yarn build
 
 EXPOSE 4300
 
-CMD ["yarn", "prod"]
+CMD ["yarn", "start:prod", "&&", "yarn", "ms:listen"]

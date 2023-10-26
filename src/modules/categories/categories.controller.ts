@@ -20,11 +20,15 @@ import { CurrentUser } from '../../utils/decorators/current-user.decorator'
 import { CommandBus } from '@nestjs/cqrs'
 import { CC } from './commands'
 import { Category } from '@prisma/client'
+import { SWAGGER_CATEGORIES } from 'src/utils/swagger'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('Categories endpoints')
 @Controller('categories')
 export class CategoriesController {
 	constructor(private readonly commandBus: CommandBus) {}
 
+	@SWAGGER_CATEGORIES.SwaggerToCreateCategory()
 	@Post('create')
 	@HttpCode(HttpStatus.OK)
 	@UseInterceptors(FileInterceptor('image'))
@@ -46,6 +50,7 @@ export class CategoriesController {
 		)
 	}
 
+	@SWAGGER_CATEGORIES.SwaggerToUpdateCategory()
 	@Patch(':id')
 	@HttpCode(HttpStatus.OK)
 	@UseInterceptors(FileInterceptor('image'))
@@ -68,6 +73,7 @@ export class CategoriesController {
 		)
 	}
 
+	@SWAGGER_CATEGORIES.SwaggerToDeleteCategory()
 	@Delete(':id')
 	@HttpCode(HttpStatus.OK)
 	public async delete(

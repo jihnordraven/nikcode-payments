@@ -8,31 +8,38 @@ import { STRATEGIES } from './guards-handlers'
 import { BalancesModule } from './modules/balances/balances.module'
 import { JwtGuard } from './guards-handlers/jwt/jwt.guard'
 import { APP_GUARD } from '@nestjs/core'
-import { CategoriesModule } from './modules/categories/categories.module';
-import { FilesModule } from './modules/files/files.module';
+import { CategoriesModule } from './modules/categories/categories.module'
+import { FilesModule } from './modules/files/files.module'
+import { AppController } from './app.controller'
+import { memoryStore } from 'cache-manager'
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({ isGlobal: true }),
-		CacheModule.registerAsync({
+		CacheModule.register({
 			isGlobal: true,
-			inject: [ConfigService],
-			useFactory: async (config: ConfigService) => ({
-				store: await redisStore({
-					password: config.getOrThrow<string>('REDIS_PASS'),
-					socket: {
-						host: config.getOrThrow<string>('REDIS_HOST'),
-						port: config.getOrThrow<number>('REDIS_PORT')
-					}
-				})
-			})
+			store: memoryStore
 		}),
+		// CacheModule.registerAsync({
+		// 	isGlobal: true,
+		// 	inject: [ConfigService],
+		// 	useFactory: async (config: ConfigService) => ({
+		// 		store: await redisStore({
+		// 			password: 'admin' /* config.getOrThrow<string>('REDIS_PASS') */,
+		// 			socket: {
+		// 				host: config.getOrThrow<string>('REDIS_HOST'),
+		// 				port: config.getOrThrow<number>('REDIS_PORT')
+		// 			}
+		// 		})
+		// 	})
+		// }),
 		PrismaModule,
 		PaymentsModule,
 		BalancesModule,
 		CategoriesModule,
 		FilesModule
 	],
+	controllers: [AppController],
 	providers: [
 		{
 			provide: APP_GUARD,

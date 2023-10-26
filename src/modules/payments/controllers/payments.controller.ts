@@ -20,7 +20,10 @@ import { PaymentsQueryRepo } from '../repositories/payments-query-repo/payments-
 import { PQ } from '../queries'
 import { FindManyPaymentsResponse } from '../core/types'
 import { UpdatePaymentDto } from '../core/dtos/update-payment.dto'
+import { ApiTags } from '@nestjs/swagger'
+import { SWAGGER_PAYMENTS } from 'src/utils/swagger'
 
+@ApiTags('Payments endpoints')
 @Controller('payments')
 export class PaymentsController {
 	constructor(
@@ -29,6 +32,7 @@ export class PaymentsController {
 		private readonly paymentsQueryRepo: PaymentsQueryRepo
 	) {}
 
+	@SWAGGER_PAYMENTS.SwaggerToCreatePayment()
 	@Post('create')
 	@HttpCode(HttpStatus.OK)
 	public async create(
@@ -38,6 +42,7 @@ export class PaymentsController {
 		return this.commandBus.execute(new PC.CreatePaymentCommand({ ...dto, userId }))
 	}
 
+	@SWAGGER_PAYMENTS.SwaggerToFindManyPayments()
 	@Get(':id')
 	@HttpCode(HttpStatus.OK)
 	public async findOne(
@@ -47,6 +52,7 @@ export class PaymentsController {
 		return this.queryBus.execute(new PQ.FindOnePaymentQuery({ id, userId }))
 	}
 
+	@SWAGGER_PAYMENTS.SwaggerToFindManyPayments()
 	@Get()
 	@HttpCode(HttpStatus.OK)
 	public async findMany(
@@ -67,6 +73,7 @@ export class PaymentsController {
 		})
 	}
 
+	@SWAGGER_PAYMENTS.SwaggerToUpdatePayment()
 	@Patch(':id')
 	@HttpCode(HttpStatus.OK)
 	public async update(
@@ -79,6 +86,7 @@ export class PaymentsController {
 		)
 	}
 
+	@SWAGGER_PAYMENTS.SwaggerToDeletePayment()
 	@Delete(':id')
 	@HttpCode(HttpStatus.OK)
 	public async delete(
