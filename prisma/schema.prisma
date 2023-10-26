@@ -42,6 +42,8 @@ model Category {
   iconUrl     String?
 
   payments Payment[]
+
+  @@map("categories")
 }
 
 // enums

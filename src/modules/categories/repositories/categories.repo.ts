@@ -26,7 +26,15 @@ export class CategoriesRepo {
 
 	public async create(data: CreateCategory): Promise<Category> {
 		const category: Category = await this.prisma.category
-			.create({ data })
+			.create({
+				data: {
+					name: data.name,
+					userId: data.userId,
+					description: data.description,
+					color: data.color,
+					iconUrl: data.iconUrl
+				}
+			})
 			.catch((err: string) => {
 				this.logger.error(red(err))
 				throw new InternalServerErrorException('Unable to create a new category')

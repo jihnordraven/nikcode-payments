@@ -3,11 +3,19 @@ import { MessagePattern, Payload } from '@nestjs/microservices'
 import { BalancesRepo } from '../repositories/balances.repo'
 import { Balance } from '@prisma/client'
 import { Public } from '../../../utils/decorators/public.decorator'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('Balances patterns')
 @Public()
 @Controller('balances')
 export class BalancesController {
 	constructor(private readonly balancesRepo: BalancesRepo) {}
+
+	// @Post()
+	// @UseGuards(JwtGuard)
+	// async create(@CurrentUser('userId') userId: string) {
+	// 	return this.balancesRepo.create(userId)
+	// }
 
 	@MessagePattern('user-created')
 	public async createByUserId(
