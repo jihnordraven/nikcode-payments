@@ -33,6 +33,8 @@ NikCode test-task | payments microservice Nest JS application
 ## Installation
 
 ```bash
+$ yarn db:push
+
 $ yarn install
 ```
 
