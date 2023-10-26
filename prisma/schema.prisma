@@ -28,17 +28,20 @@ model Payment {
   updatedAt   DateTime    @updatedAt
 
   categoryId String?
-  // category   Category? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("payments")
 }
 
 model Category {
-  id     String @id @unique @default(uuid())
-  name   String
-  userId String
+  id          String  @id @unique @default(uuid())
+  name        String
+  description String?
+  userId      String
+  color       String?
+  iconUrl     String?
 
-  // payments Payment[]
+  payments Payment[]
 }
 
 // enums

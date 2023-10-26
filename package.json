@@ -23,6 +23,8 @@
 		"test:e2e": "jest --config ./test/jest-e2e.json"
 	},
 	"dependencies": {
+		"@aws-sdk/client-s3": "^3.436.0",
+		"@aws-sdk/lib-storage": "^3.436.0",
 		"@nestjs/cache-manager": "^2.1.0",
 		"@nestjs/common": "^10.0.0",
 		"@nestjs/config": "^3.1.1",
@@ -43,12 +45,14 @@
 		"class-validator": "^0.14.0",
 		"colorette": "^2.0.20",
 		"dotenv": "^16.3.1",
+		"multer": "^1.4.5-lts.1",
 		"nest-winston": "^1.9.4",
 		"passport": "^0.6.0",
 		"passport-jwt": "^4.0.1",
 		"reflect-metadata": "^0.1.13",
 		"rxjs": "^7.8.1",
 		"swagger-ui-express": "^5.0.0",
+		"uuid": "^9.0.1",
 		"winston": "^3.11.0"
 	},
 	"devDependencies": {
@@ -57,9 +61,11 @@
 		"@nestjs/testing": "^10.0.0",
 		"@types/express": "^4.17.17",
 		"@types/jest": "^29.5.2",
+		"@types/multer": "^1.4.9",
 		"@types/node": "^20.3.1",
 		"@types/passport-jwt": "^3.0.11",
 		"@types/supertest": "^2.0.12",
+		"@types/uuid": "^9.0.6",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
 		"eslint": "^8.42.0",

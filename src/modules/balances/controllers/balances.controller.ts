@@ -10,7 +10,9 @@ export class BalancesController {
 	constructor(private readonly balancesRepo: BalancesRepo) {}
 
 	@MessagePattern('user-created')
-	public async createByUserId(@Payload() userId: string): Promise<Balance> {
+	public async createByUserId(
+		@Payload() userId: string
+	): Promise<{ ok: boolean; err?: string }> {
 		return this.balancesRepo.create(userId)
 	}
 

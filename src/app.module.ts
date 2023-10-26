@@ -8,6 +8,8 @@ import { STRATEGIES } from './guards-handlers'
 import { BalancesModule } from './modules/balances/balances.module'
 import { JwtGuard } from './guards-handlers/jwt/jwt.guard'
 import { APP_GUARD } from '@nestjs/core'
+import { CategoriesModule } from './modules/categories/categories.module';
+import { FilesModule } from './modules/files/files.module';
 
 @Module({
 	imports: [
@@ -27,7 +29,9 @@ import { APP_GUARD } from '@nestjs/core'
 		}),
 		PrismaModule,
 		PaymentsModule,
-		BalancesModule
+		BalancesModule,
+		CategoriesModule,
+		FilesModule
 	],
 	providers: [
 		{
