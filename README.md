@@ -41,6 +41,12 @@ $ yarn db:push
 $ yarn install
 ```
 
+## Running rmq listener
+
+```bash
+$ yarn ms:listen
+```
+
 ## Running the app
 
 ```bash
