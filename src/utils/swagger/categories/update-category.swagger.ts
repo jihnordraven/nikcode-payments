@@ -1,6 +1,6 @@
 import { HttpStatus, applyDecorators } from '@nestjs/common'
 import { ApiBody, ApiHeader, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger'
-import { UpdateCategoryDto } from 'src/modules/categories/core/dtos'
+import { UpdateCategoryDto } from '../../../modules/categories/core/dtos'
 
 export const SwaggerToUpdateCategory = (): MethodDecorator => {
 	return applyDecorators(

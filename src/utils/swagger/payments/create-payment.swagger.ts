@@ -1,6 +1,6 @@
 import { HttpStatus, applyDecorators } from '@nestjs/common'
 import { ApiBody, ApiHeader, ApiOperation, ApiResponse } from '@nestjs/swagger'
-import { CreatePaymentDto } from 'src/modules/payments/core/dtos'
+import { CreatePaymentDto } from '../../../modules/payments/core/dtos'
 
 export const SwaggerToCreatePayment = (): MethodDecorator => {
 	return applyDecorators(

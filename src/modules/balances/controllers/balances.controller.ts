@@ -11,12 +11,6 @@ import { ApiTags } from '@nestjs/swagger'
 export class BalancesController {
 	constructor(private readonly balancesRepo: BalancesRepo) {}
 
-	// @Post()
-	// @UseGuards(JwtGuard)
-	// async create(@CurrentUser('userId') userId: string) {
-	// 	return this.balancesRepo.create(userId)
-	// }
-
 	@MessagePattern('user-created')
 	public async createByUserId(
 		@Payload() userId: string

@@ -20,7 +20,7 @@ import { CurrentUser } from '../../utils/decorators/current-user.decorator'
 import { CommandBus } from '@nestjs/cqrs'
 import { CC } from './commands'
 import { Category } from '@prisma/client'
-import { SWAGGER_CATEGORIES } from 'src/utils/swagger'
+import { SWAGGER_CATEGORIES } from '../../utils/swagger'
 import { ApiTags } from '@nestjs/swagger'
 
 @ApiTags('Categories endpoints')
@@ -31,19 +31,9 @@ export class CategoriesController {
 	@SWAGGER_CATEGORIES.SwaggerToCreateCategory()
 	@Post()
 	@HttpCode(HttpStatus.OK)
-	// @UseInterceptors(FileInterceptor('image'))
 	public async create(
 		@CurrentUser('userId', ParseUUIDPipe) userId: string,
 		@Body() dto: CreateCategoryDto
-		// @UploadedFile(
-		// 	new ParseFilePipe({
-		// 		validators: [
-		// 			new FileTypeValidator({ fileType: /\.(jpg|jpeg|png)$/ }),
-		// 			new MaxFileSizeValidator({ maxSize: 100 * 1024 })
-		// 		]
-		// 	})
-		// )
-		// file?: Express.Multer.File
 	): Promise<Category> {
 		return this.commandBus.execute(
 			new CC.CreateCategoryCommand({ userId, file: null, ...dto })

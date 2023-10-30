@@ -21,7 +21,7 @@ import { PQ } from '../queries'
 import { FindManyPaymentsResponse } from '../core/types'
 import { UpdatePaymentDto } from '../core/dtos/update-payment.dto'
 import { ApiTags } from '@nestjs/swagger'
-import { SWAGGER_PAYMENTS } from 'src/utils/swagger'
+import { SWAGGER_PAYMENTS } from '../../../utils/swagger'
 
 @ApiTags('Payments endpoints')
 @Controller('payments')
